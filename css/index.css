@@ -1,6 +1,7 @@
 html {
+  font-size: 0.9em;
   height: 100%;
-  background-color: #fec556;
+  background-color: rgba(254,197,86,0.8);
 }
 
 body {
@@ -17,17 +18,18 @@ header, footer {
 }
 main {
   height: 86%;
+  position: relative;
 }
 
 #playerA, #playerB, #roundtable{
-  height: 33%;
+  height: 33.3%;
   box-sizing: border-box;
 }
 #roundtable{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #448b61;
+  background-color: rgba(68,139,97,0.8);
 }
 
 #playerA ul,#playerB ul{
@@ -39,8 +41,8 @@ main {
 
 ul[class="banker"] li,ul[class="player"] li{
   display: inline-block;
-  width: 4em;
-  height: 40%; /*为ul的高40%可能有多行出现的情况*/
+  width: 5em;
+  height: 7em; /*为ul的高40%可能有多行出现的情况*/
   margin: 0.5em;
   float: left;
   background-size: 100% 100%;
@@ -53,11 +55,11 @@ ul[class="banker"] li,ul[class="player"] li{
 }
 
 #selector button {
-  width: 6em;
-  height: 3em;
+  width: 7em;
+  height: 4em;
   border-radius: 1em;
   border: solid 1px #ff7473;
-  margin: 0 1em;
+  margin: 0 0.5em;
   background-color: #ff7473;
   font-size: .9em;
   color: #fff;
@@ -75,12 +77,97 @@ button:active {
 }
 
 
+.count{
+  position: absolute;
+  left: 50%;
+  margin-left: -2em;
+  width: 4em;
+  height: 2em;
+  background-color: #eef3f0;
+  border-radius: 0.5em;
+  text-align: center;
+  line-height: 2em;
+}
+
+
+#playerA .count{
+  top: 0;
+}
+#playerA .count:before{
+  content: '\25BC';
+  color: #eef3f0;
+  position: absolute;
+  font-size: 1em;
+  top: 1.3em;
+  left: 1.5em;
+}
+
+#playerB .count{
+  bottom: 0;
+}
+#playerB .count:before{
+    content: '\25B2';
+    width: 0;
+    height: 0;
+    color: #eef3f0;
+    position: absolute;
+    font-size: 1em;
+    top: -1.2em;
+    left: 1.5em;
+}
+
+
 .hide{
   display: none;
 }
 .block{
   display: inline-block;
 }
+
+.mask{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+}
+.promot{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20em;
+  height: 20em;
+  margin-left: -10em;
+  margin-top: -10em;
+  padding: 0.5em;
+  background-color: rgba(240,250,251,0.8);
+  text-align: justify;
+  line-height: 3em;
+  overflow: auto;
+  border-radius: 1em;
+  box-shadow: 0 0 5px blue;
+}
+
+/*webkit*/
+::-webkit-scrollbar {
+      width: 0.5em;
+  }
+  ::-webkit-scrollbar-track {
+      background-color: rgb(254,197,87,0.8);
+  } /* 滚动条的滑轨背景颜色 */
+
+  ::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+  } /* 滑块颜色 */
+
+  ::-webkit-scrollbar-button {
+      background-color: rgb(254,197,87,0.8);
+      border-radius: 5px;
+  } /* 滑轨两头的监听按钮颜色 */
+
+
+
 
 .back{
   background: url(../images/unknow.png) no-repeat;
