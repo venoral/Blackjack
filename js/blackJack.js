@@ -252,7 +252,7 @@ var result = function(sum, $ul, $result, t){
       clearInterval(t);
       //比较
 
-      normalResult(19, sumb, $result);
+     // normalResult(19, sumb, $result);
     }
     return sum;
   }
