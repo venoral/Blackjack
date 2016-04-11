@@ -1,5 +1,5 @@
 html {
-  font-size: 0.9em;
+  font-size: .9em;
   height: 100%;
   background-color: rgba(254,197,86,0.8);
 }
@@ -15,35 +15,54 @@ header, footer {
   justify-content: center;
   align-items: center;
   height: 7%;
+  color: #B8860B;
 }
+
 main {
   height: 86%;
   position: relative;
 }
 
 #playerA, #playerB, #roundtable{
-  height: 33.3%;
+  height: 35%;
   box-sizing: border-box;
-}
-#roundtable{
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(68,139,97,0.8);
+}
+#roundtable{
+  background-color: rgba(68,139,97,.6);
+  height: 30%;
+}
+#roundtable .wrap{
+  height: 90%;
+}
+#roundtable .wrap .role{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 25%;
+  color: #FFE4C4;
 }
 
 #playerA ul,#playerB ul{
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+}
+#playerA .wrap, #playerB .wrap{
+    width: 90%;
+    height: 80%;
+    border: dashed 2px #ff7473;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 1em;
 }
 
 ul[class="banker"] li,ul[class="player"] li{
   display: inline-block;
   width: 5em;
-  height: 7em; /*为ul的高40%可能有多行出现的情况*/
-  margin: 0.5em;
+  height: 7em;
+  margin: .5em;
   float: left;
   background-size: 100% 100%;
 }
@@ -52,6 +71,7 @@ ul[class="banker"] li,ul[class="player"] li{
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 50%;
 }
 
 #selector button {
@@ -59,7 +79,7 @@ ul[class="banker"] li,ul[class="player"] li{
   height: 4em;
   border-radius: 1em;
   border: solid 1px #ff7473;
-  margin: 0 0.5em;
+  margin: 0 .5em;
   background-color: #ff7473;
   font-size: .9em;
   color: #fff;
@@ -72,7 +92,7 @@ button:hover {
 }
 button:active {
   opacity: .95;
-  transform: scale(.95);
+  transform: scale(.9);
   transition: all 60ms ease;
 }
 
@@ -84,7 +104,7 @@ button:active {
   width: 4em;
   height: 2em;
   background-color: #eef3f0;
-  border-radius: 0.5em;
+  border-radius: .5em;
   text-align: center;
   line-height: 2em;
 }
@@ -136,40 +156,44 @@ button:active {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 20em;
-  height: 20em;
-  margin-left: -10em;
-  margin-top: -10em;
-  padding: 0.5em;
+  width: 22em;
+  height: 22em;
+  margin-left: -11em;
+  margin-top: -11em;
+  padding: .5em;
   background-color: rgba(240,250,251,0.8);
   text-align: justify;
   line-height: 3em;
   overflow: auto;
-  border-radius: 1em;
-  box-shadow: 0 0 5px blue;
+  border-radius: .5em;
+  box-shadow: 0 0 1em #f0fafb;
+}
+
+.result{
+  text-align: center;
 }
 
 /*webkit*/
 ::-webkit-scrollbar {
-      width: 0.5em;
+      width: .5em;
   }
   ::-webkit-scrollbar-track {
-      background-color: rgb(254,197,87,0.8);
+      background-color: rgb(254,197,87,.8);
   } /* 滚动条的滑轨背景颜色 */
 
   ::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2);
+      background-color: rgba(0, 0, 0, .2);
   } /* 滑块颜色 */
 
   ::-webkit-scrollbar-button {
-      background-color: rgb(254,197,87,0.8);
+      background-color: rgb(254,197,87,.8);
       border-radius: 5px;
   } /* 滑轨两头的监听按钮颜色 */
 
 
 
 
-.back{
+.unknow{
   background: url(../images/unknow.png) no-repeat;
 }
 .h1 {

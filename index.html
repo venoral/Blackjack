@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8" >
-  <meta name="viewport" content="width=device-width, initial-scale=1" >
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <meat name="applicable-device" content="pc,mobile">
   <meta name="renderer" content="webkit">
   <meat name="description" content="21点黑杰克小游戏">
@@ -12,38 +12,49 @@
 </head>
 <body>
   <header>
-    <h2>21点黑杰克</h2>
+    <h2>BlackJack</h2>
   </header>
   <main>
     <div id="playerA">
+      <div class="wrap">
       <ul class="banker">
 
       </ul>
+      </div>
       <span class="count countA">0</span>
     </div>
     <div id="roundtable">
-      <div id="selector">
-      <button id="addCard" class="hide">要牌</button>
-      <button id="begin">开始</button>
-      <button id="rules">游戏规则</button>
-      <button id="wager" class="hide">赌注</button>
-      <button id="stopCard" class="hide">停牌</button>
+      <div class="wrap">
+        <span class="role">庄家</span>
+        <div id="selector" data-show="begin rules" data-hide="addCard wager stopCard">
+          <button id="addCard" class="hide">要牌</button>
+          <button id="begin">开始</button>
+          <button id="rules">游戏规则</button>
+          <button id="wager" class="hide">赌注</button>
+          <button id="stopCard" class="hide">停牌</button>
+        </div>
+        <span class="role">玩家</span>
       </div>
     </div>
     <div id="playerB">
-      <ul class="player">
+      <div class="wrap">
+        <ul class="player">
 
-      </ul>
+        </ul>
+      </div>
       <span class="count countB">0</span>
     </div>
   </main>
 
   <div class="mask hide">
-    <div class="promot">
+    <div class="promot" id="promot">
 
     </div>
   </div>
   <footer>Copyright© 2016 venoral</footer>
-  <script type="text/javascript" src="js/blackJack.js"></script>
+  <script type="text/javascript" src="js/config.js"></script>
+  <script type="text/javascript" src="js/util.js"></script>
+  <script type="text/javascript" src="js/interface.js"></script>
+  <script type="text/javascript" src="js/game.js"></script>
 </body>
 </html>
