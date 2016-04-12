@@ -1,5 +1,6 @@
 //公共
 var  Util = {
+    //统计
     //注册事件监听
 
     //获取事件对象
@@ -70,41 +71,67 @@ var  Util = {
       return count;
     },
     //判断是否越界并给出结果
-    overFlow : function (currole, sum, $mask, $promot){
-      var str = '';
+    overFlow : function (currole, $mask, $promot, $balance, $bankerul, $playerul){
+      var winb = '玩家输了！<br>' + '点击提示框外部可再来一局~',
+      winp = '玩家赢了！<br>' + '点击提示框外部可再来一局~',
+      windraw = '哎呦~不分胜负！' + '点击提示框外部可再来一局~';
+      if(currole == '庄家'){
+        sum = Interfaces.cardPoint.banker;
+      }else{
+        sum = Interfaces.cardPoint.player;
+      }
 
-      if(sum > 21){
-        clearInterval(Interfaces.timer);
-        str = 'Game over !<br>' + currole + '输了！<br>' + '点击提示框外部可再来一局~';
-        if(currole == '庄家'){
-          str = '玩家赢了！<br>' + '点击提示框外部可再来一局~'
-        }
-        Interfaces.promotMes($mask, $promot, false, str);
-
-      }else if(sum == 21){
-        clearInterval(Interfaces.timer);
-        str = currole + '赢了！<br>' + '点击提示框外部可再来一局~';
-        if(currole == '庄家'){
-          str = 'Game over !<br>' + '玩家输了！<br>' + '点击提示框外部可再来一局~'
-        }
-        Interfaces.promotMes($mask, $promot, false, str);
-      }else {
-        if(currole == '庄家' && sum >= 19){
-
-          clearInterval(Interfaces.timer);
-          //都未越界时候比较玩家和庄家点数
-          var bsum, psum;
-          bsum = Interfaces.cardPoint.banker;
-          psum = Interfaces.cardPoint.player;
-          if(bsum > psum){
-            str = 'Game over !<br>' + '玩家输了！<br>' + '点击提示框外部可再来一局~';
-          }else if(bsum < psum){
-            str = '玩家赢了！<br>' + '点击提示框外部可再来一局~';
+      switch ( true ) {
+        case sum > 21:
+          if(currole == '庄家'){
+            clearInterval(Interfaces.timer);
+            Interfaces.promotMes($mask, $promot, false, winp);
+            Util.updateBalance($balance, 10);
           }else{
-            str = '哎呦~平手了！<br>' + '点击提示框外部可再来一局~';
+            Interfaces.promotMes($mask, $promot, false, winb);
           }
-          Interfaces.promotMes($mask, $promot, false, str);
-        }
+          break;
+        case sum == 21:
+          if(currole == '庄家'){
+            clearInterval(Interfaces.timer);
+            //玩家输
+            Interfaces.promotMes($mask, $promot, false, winb);
+          }else{
+            //玩家第一次就是21要判断此时庄家是否也是21
+            var len = $playerul.querySelectorAll('li').length;
+            if(len == 2 && this.getCount($bankerul) == 21){
+              //平手
+              Interfaces.promotMes($mask, $promot, false, windraw);
+              Util.updateBalance($balance, 10);
+            }else if(len ==2){
+              //玩家胜,玩家是黑杰克中彩了获得双倍赌注
+              Interfaces.promotMes($mask, $promot, false, winp);
+              Util.updateBalance($balance, 20);
+            }else{
+              //普通获胜
+              Interfaces.promotMes($mask, $promot, false, winp);
+              Util.updateBalance($balance, 10);
+            }
+          }
+          break;
+        case sum < 21:
+          if(currole == '庄家' && sum >= 19){
+              clearInterval(Interfaces.timer);
+              //都未越界比较玩家和庄家点数
+              var bsum, psum;
+              bsum = Interfaces.cardPoint.banker;
+              psum = Interfaces.cardPoint.player;
+              if(bsum > psum){
+                Interfaces.promotMes($mask, $promot, false, winb);
+              }else if(bsum < psum){
+                Interfaces.promotMes($mask, $promot, false, winp);
+                Util.updateBalance($balance, 10);
+              }else{
+                Interfaces.promotMes($mask, $promot, false, windraw);
+                Util.updateBalance($balance, 10);
+              }
+          }
+          break;
       }
 
     },
@@ -126,6 +153,12 @@ var  Util = {
     updatePoint : function ($count, str){
 
        $count.innerHTML = Interfaces.cardPoint[str];
+
+    },
+    //余额值与innerHTML同步更新
+    updateBalance : function ($balance, num){
+       Interfaces.balance += num;
+       $balance.innerHTML = Interfaces.balance;
 
     }
 

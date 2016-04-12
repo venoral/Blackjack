@@ -1,12 +1,15 @@
-//与页面操作变化相关
+//与页面dom操作变化相关
 var Interfaces = {
-  //显示的点值
+  //显示的牌点值
   cardPoint : {
     banker : Config.actor.banker.cardPoint,
     player : Config.actor.player.cardPoint
   },
 
-  divCards : function($banker, $player, $countA, $countB, $mask, $promot){
+  //余额值
+  balance : Config.actor.player.initMoney,
+
+  divCards : function($banker, $player, $countA, $countB, $mask, $promot, $balance){
     //创建4个li并添加到ul
     var i = 0, $li, card, val;
     for(i; i<4; i++){
@@ -28,12 +31,13 @@ var Interfaces = {
           this.cardPoint.player = Util.getCount($player);
           Util.updatePoint($countB, 'player')
           //每加一张牌判断是否越界
-          Util.overFlow('玩家', this.cardPoint.player, $mask, $promot);
+          Util.overFlow('玩家', $mask, $promot, $balance, $banker, $player);
         }else if(i ==2){
           this.cardPoint.banker = Util.getCount($banker);
           Util.updatePoint($countA, 'banker');
           //判断是否越界
-          Util.overFlow('庄家', this.cardPoint.banker, $mask, $promot);
+          Util.overFlow('庄家', $mask, $promot, $balance, $banker, $player);
+
         }
       }
     },
@@ -49,11 +53,13 @@ var Interfaces = {
       //判断当前是哪种提示框
       if(mes.length < 50){
         $promot.className += ' result';
+      }else{
+        $promot.className = 'promot';
       }
       $mask.className = 'mask block';
     },
   //加一张牌
-  addCard : function (currole, $parent, $count, $mask, $promot){
+  addCard : function (currole, $parent, $count, $mask, $promot, $balance, $banker, $player){
 
       var $li, card, val, sum, role;
       $li = Util.appToEle('li', $parent);
@@ -70,12 +76,13 @@ var Interfaces = {
       }
       this.cardPoint[role] = Util.getCount($parent);
       Util.updatePoint($count, role);
-      Util.overFlow(currole, this.cardPoint[role], $mask, $promot);
+
+      Util.overFlow(currole, $mask, $promot, $balance, $banker, $player);
 
 
     },
   //停牌
-  stopCard : function (currole, $parent, $count, $mask, $promot){
+  stopCard : function (currole, $parent, $count, $mask, $promot, $balance, $banker, $player){
     //背过去的图片反转，计算点数判断越界
     $li = $parent.lastElementChild;
     $li.className = $li.dataset.str;
@@ -84,7 +91,7 @@ var Interfaces = {
 
     Util.updatePoint($count, 'banker');
     if(this.cardPoint.banker >= 19){
-      Util.overFlow(currole, this.cardPoint.banker, $mask, $promot);
+      Util.overFlow(currole, $mask, $promot, $balance, $banker, $player);
       return;
     }
 
@@ -92,7 +99,8 @@ var Interfaces = {
     //系统自动加牌
     Interfaces.timer = setInterval(function (){
 
-      Interfaces.addCard(currole, $parent, $count, $mask, $promot);
+      Interfaces.addCard(currole, $parent, $count, $mask, $promot, $balance, $banker, $player);
+
 
     }, 500);
 

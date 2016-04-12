@@ -14,6 +14,9 @@ var Game = function (){
       $countA = Util.getElement('.countA'),
       $countB = Util.getElement('.countB'),
 
+      //余额显示区
+      $balance = Util.getElement('#balance'),
+
       //遮罩层
       $mask = Util.getElement('.mask'),
       $promot = Util.getElement('.promot');
@@ -29,17 +32,23 @@ var Game = function (){
     //事件委托
     $selector.addEventListener('click', function (e){
       if(e.target.id == 'begin'){
+        //检查余额是否为0
+        if(Interfaces.balance == 0){
+          Interfaces.balance = 100;
+        }
         //开始按钮和规则按钮隐藏，其它按钮出现
         Util.butState($selector);
+        //余额改变
+        Util.updateBalance($balance, -10);
         //正式发牌，每发一张牌计算对应点数并显示
-        Interfaces.divCards($banker, $player, $countA, $countB, $mask, $promot);
+        Interfaces.divCards($banker, $player, $countA, $countB, $mask, $promot, $balance);
 
       }else if(e.target.id == 'rules'){
         //居中弹出规则框
         Interfaces.promotMes($mask, $promot, false, Config.rules);
       }else if(e.target.id == 'addCard'){
         //加牌
-        Interfaces.addCard('玩家', $player, $countB, $mask, $promot);
+        Interfaces.addCard('玩家', $player, $countB, $mask, $promot, $balance, $banker, $player);
 
       }else if(e.target.id == 'stopCard'){
         //停牌
@@ -52,10 +61,8 @@ var Game = function (){
           }
         }
         throttle = setTimeout(function(){
-          Interfaces.stopCard('庄家', $banker, $countA, $mask, $promot);
+          Interfaces.stopCard('庄家', $banker, $countA, $mask, $promot, $balance, $banker, $player);
         }, 200);
-
-      }else if(e.target.id == 'wager'){
 
       }
     }, false);

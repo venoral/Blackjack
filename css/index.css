@@ -43,6 +43,7 @@ main {
   align-items: center;
   height: 25%;
   color: #FFE4C4;
+  white-space: pre;
 }
 
 #playerA ul,#playerB ul{
@@ -79,7 +80,7 @@ ul[class="banker"] li,ul[class="player"] li{
   height: 4em;
   border-radius: 1em;
   border: solid 1px #ff7473;
-  margin: 0 .5em;
+  margin: 0 1em;
   background-color: #ff7473;
   font-size: .9em;
   color: #fff;
@@ -87,13 +88,26 @@ ul[class="banker"] li,ul[class="player"] li{
   cursor: pointer;
 }
 button:hover {
-  opacity: .95;
+  opacity: .9;
   transition: all 60ms ease;
 }
 button:active {
   opacity: .95;
   transform: scale(.9);
   transition: all 60ms ease;
+}
+
+#selector #wager{
+  width: 4em;
+  height: 4em;
+  padding: .5em;
+  background: #f0fafb;
+  border-radius: 50%;
+  font-size: .9em;
+  text-align: center;
+  color: rgba(128, 128, 128, .9);
+  line-height: 4em;
+  box-shadow: 0 0 1em rgba(128, 128, 128, .9);
 }
 
 
