@@ -124,7 +124,7 @@ JavaScript 根据游戏需要实现的交互功能，采用面向对象的方式
 ###三.测试结果
 以iphone6plus为UA，动图展示整个过程
 
-![blackjack](file:///C:/Users/venoral/Desktop/blackjack.gif)
+![blackjack](https://github.com/venoral/Blackjack/blob/master/resultImg/blackjack.gif?raw=true)
 
 ###四.个人体会
 实践总结
