@@ -11,11 +11,12 @@ var Game = function (){
       $player = Util.getElement('.player'),
 
       //点数显示区
-      $countA = Util.getElement('.countA'),
       $countB = Util.getElement('.countB'),
+      $countP = Util.getElement('.countP'),
 
       //余额显示区
       $balance = Util.getElement('#balance'),
+      $bankerBalance = Util.getElement('#bankerBalance'),
 
       //遮罩层
       $mask = Util.getElement('.mask'),
@@ -33,22 +34,27 @@ var Game = function (){
     $selector.addEventListener('click', function (e){
       if(e.target.id == 'begin'){
         //检查余额是否为0
-        if(Interfaces.balance == 0){
-          Interfaces.balance = 100;
+        if(Interfaces.roleInfo.player.balance == 0 || Interfaces.roleInfo.player.balance ==150){
+           Interfaces.roleInfo.player.balance = 100;
+           Interfaces.roleInfo.banker.balance = 50;
         }
-        //开始按钮和规则按钮隐藏，其它按钮出现
-        Util.butState($selector);
         //余额改变
         Util.updateBalance($balance, -10);
+        Util.updateBankerBalance($bankerBalance, 0);
+
+        //开始按钮和规则按钮隐藏，其它按钮出现
+        Util.butState($selector);
+
         //正式发牌，每发一张牌计算对应点数并显示
-        Interfaces.divCards($banker, $player, $countA, $countB, $mask, $promot, $balance);
+
+        Interfaces.divCards($banker, $player, $countB, $countP, $mask, $promot, $balance, $bankerBalance);
 
       }else if(e.target.id == 'rules'){
         //居中弹出规则框
         Interfaces.promotMes($mask, $promot, false, Config.rules);
       }else if(e.target.id == 'addCard'){
         //加牌
-        Interfaces.addCard('玩家', $player, $countB, $mask, $promot, $balance, $banker, $player);
+        Interfaces.addCard('玩家', $player, $countP, $mask, $promot, $balance, $banker, $bankerBalance);
 
       }else if(e.target.id == 'stopCard'){
         //停牌
@@ -61,7 +67,7 @@ var Game = function (){
           }
         }
         throttle = setTimeout(function(){
-          Interfaces.stopCard('庄家', $banker, $countA, $mask, $promot, $balance, $banker, $player);
+          Interfaces.stopCard('庄家', $banker, $countB, $mask, $promot, $balance, $banker, $bankerBalance);
         }, 200);
 
       }
@@ -77,11 +83,12 @@ var Game = function (){
         }else{
           //从游戏页转来的
           Interfaces.promotMes($mask, $promot, true);
+
           //点击提示框外部后清除li和显示的点值
           Util.clearItem();
           //清除点数
-          Util.updatePoint($countA, 'banker');
-          Util.updatePoint($countB, 'player');
+          Util.updateRoleInfo($banker, $countB, 'banker');
+          Util.updateRoleInfo($player, $countP, 'player');
           //按钮切换
           Util.butState($selector);
         }

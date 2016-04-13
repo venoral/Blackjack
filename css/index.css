@@ -3,7 +3,6 @@ html {
   height: 100%;
   background-color: rgba(254,197,86,0.8);
 }
-
 body {
   height: 100%;
   font: normal 100% Helvetica, Arial, sans-serif;
@@ -17,11 +16,11 @@ header, footer {
   height: 7%;
   color: #B8860B;
 }
-
 main {
   height: 86%;
   position: relative;
 }
+
 
 #playerA, #playerB, #roundtable{
   height: 35%;
@@ -30,6 +29,7 @@ main {
   justify-content: center;
   align-items: center;
 }
+/*牌桌*/
 #roundtable{
   background-color: rgba(68,139,97,.6);
   height: 30%;
@@ -46,9 +46,7 @@ main {
   white-space: pre;
 }
 
-#playerA ul,#playerB ul{
-
-}
+/*庄家和玩家*/
 #playerA .wrap, #playerB .wrap{
     width: 90%;
     height: 80%;
@@ -58,7 +56,6 @@ main {
     align-items: center;
     border-radius: 1em;
 }
-
 ul[class="banker"] li,ul[class="player"] li{
   display: inline-block;
   width: 5em;
@@ -68,13 +65,13 @@ ul[class="banker"] li,ul[class="player"] li{
   background-size: 100% 100%;
 }
 
+/*按钮*/
 #selector{
   display: flex;
   justify-content: center;
   align-items: center;
   height: 50%;
 }
-
 #selector button {
   width: 7em;
   height: 4em;
@@ -97,6 +94,7 @@ button:active {
   transition: all 60ms ease;
 }
 
+/*赌注样式*/
 #selector #wager{
   width: 4em;
   height: 4em;
@@ -110,7 +108,7 @@ button:active {
   box-shadow: 0 0 1em rgba(128, 128, 128, .9);
 }
 
-
+/*消息框展示总牌值样式*/
 .count{
   position: absolute;
   left: 50%;
@@ -122,8 +120,6 @@ button:active {
   text-align: center;
   line-height: 2em;
 }
-
-
 #playerA .count{
   top: 0;
 }
@@ -135,7 +131,6 @@ button:active {
   top: 1.3em;
   left: 1.5em;
 }
-
 #playerB .count{
   bottom: 0;
 }
@@ -157,7 +152,7 @@ button:active {
 .block{
   display: inline-block;
 }
-
+/*遮罩层样式*/
 .mask{
   position: absolute;
   width: 100%;
@@ -182,12 +177,12 @@ button:active {
   border-radius: .5em;
   box-shadow: 0 0 1em #f0fafb;
 }
-
 .result{
   text-align: center;
 }
 
-/*webkit*/
+
+/*webkit滚动条*/
 ::-webkit-scrollbar {
       width: .5em;
   }
@@ -205,215 +200,6 @@ button:active {
   } /* 滑轨两头的监听按钮颜色 */
 
 
-
-
 .unknow{
   background: url(../images/unknow.png) no-repeat;
-}
-.h1 {
-  background: url(../images/h1.png);
-}
-
-.h2 {
-  background: url(../images/h2.png);
-}
-
-.h3 {
-  background: url(../images/h3.png);
-}
-
-.h4 {
-  background: url(../images/h4.png);
-}
-
-.h5 {
-  background: url(../images/h5.png);
-}
-
-.h6 {
-  background: url(../images/h6.png);
-}
-
-.h7 {
-  background: url(../images/h7.png);
-}
-
-.h8 {
-  background: url(../images/h8.png);
-}
-
-.h9 {
-  background: url(../images/h9.png);
-}
-
-.h10 {
-  background: url(../images/h10.png);
-}
-
-.hj {
-  background: url(../images/hj.png);
-}
-
-.hq {
-  background: url(../images/hq.png);
-}
-
-.hk {
-  background: url(../images/hk.png);
-}
-
-.s1 {
-  background: url(../images/s1.png);
-}
-
-.s2 {
-  background: url(../images/s2.png);
-}
-
-.s3 {
-  background: url(../images/s3.png);
-}
-
-.s4 {
-  background: url(../images/s4.png);
-}
-
-.s5 {
-  background: url(../images/s5.png);
-}
-
-.s6 {
-  background: url(../images/s6.png);
-}
-
-.s7 {
-  background: url(../images/s7.png);
-}
-
-.s8 {
-  background: url(../images/s8.png);
-}
-
-.s9 {
-  background: url(../images/s9.png);
-}
-
-.s10 {
-  background: url(../images/s10.png);
-}
-
-.sj {
-  background: url(../images/sj.png);
-}
-
-.sq {
-  background: url(../images/sq.png);
-}
-
-.sk {
-  background: url(../images/sk.png);
-}
-
-.c1 {
-  background: url(../images/c1.png);
-}
-
-.c2 {
-  background: url(../images/c2.png);
-}
-
-.c3 {
-  background: url(../images/c3.png);
-}
-
-.c4 {
-  background: url(../images/c4.png);
-}
-
-.c5 {
-  background: url(../images/c5.png);
-}
-
-.c6 {
-  background: url(../images/c6.png);
-}
-
-.c7 {
-  background: url(../images/c7.png);
-}
-
-.c8 {
-  background: url(../images/c8.png);
-}
-
-.c9 {
-  background: url(../images/c9.png);
-}
-
-.c10 {
-  background: url(../images/c10.png);
-}
-
-.cj {
-  background: url(../images/cj.png);
-}
-
-.cq {
-  background: url(../images/cq.png);
-}
-
-.ck {
-  background: url(../images/ck.png);
-}
-
-.d1 {
-  background: url(../images/d1.png);
-}
-
-.d2 {
-  background: url(../images/d2.png);
-}
-
-.d3 {
-  background: url(../images/d3.png);
-}
-
-.d4 {
-  background: url(../images/d4.png);
-}
-
-.d5 {
-  background: url(../images/d5.png);
-}
-
-.d6 {
-  background: url(../images/d6.png);
-}
-
-.d7 {
-  background: url(../images/d7.png);
-}
-
-.d8 {
-  background: url(../images/d8.png);
-}
-
-.d9 {
-  background: url(../images/d9.png);
-}
-
-.d10 {
-  background: url(../images/d10.png);
-}
-
-.dj {
-  background: url(../images/dj.png);
-}
-
-.dq {
-  background: url(../images/dq.png);
-}
-
-.dk {
-  background: url(../images/dk.png);
 }

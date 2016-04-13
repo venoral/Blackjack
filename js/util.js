@@ -1,10 +1,5 @@
 //公共
 var  Util = {
-    //统计
-    //注册事件监听
-
-    //获取事件对象
-
     //获取元素
     getElement : function(sel){
       return document.querySelector(sel);
@@ -57,6 +52,9 @@ var  Util = {
     getCount : function ($ul){
       var count = 0, i= 0, cardA = [];
       Array.prototype.forEach.call($ul.querySelectorAll('li'), function(item, idx){
+        if(item.className == 'unknow'){
+          return;
+        }
         count += parseInt(item.dataset.val);
 
         if(item.dataset.val == '11'){
@@ -71,66 +69,85 @@ var  Util = {
       return count;
     },
     //判断是否越界并给出结果
-    overFlow : function (currole, $mask, $promot, $balance, $bankerul, $playerul){
+    overFlow : function (currole, $balance, $bankerul, $bankerBalance){
       var winb = '玩家输了！<br>' + '点击提示框外部可再来一局~',
-      winp = '玩家赢了！<br>' + '点击提示框外部可再来一局~',
-      windraw = '哎呦~不分胜负！' + '点击提示框外部可再来一局~';
+          winp = '玩家赢了！<br>' + '点击提示框外部可再来一局~',
+          windraw = '哎呦~不分胜负！<br>' + '点击提示框外部可再来一局~';
+      var num ; //玩家需要减少的量
       if(currole == '庄家'){
-        sum = Interfaces.cardPoint.banker;
+        sum = Interfaces.roleInfo.banker.cardPoint;
       }else{
-        sum = Interfaces.cardPoint.player;
+        sum = Interfaces.roleInfo.player.cardPoint;
       }
 
       switch ( true ) {
         case sum > 21:
           if(currole == '庄家'){
             clearInterval(Interfaces.timer);
-            Interfaces.promotMes($mask, $promot, false, winp);
-            Util.updateBalance($balance, 10);
+            num = Util.updateBankerBalance($bankerBalance, -10);
+            Util.updateBalance($balance, num + 10);
+            return winp;
           }else{
-            Interfaces.promotMes($mask, $promot, false, winb);
+            Util.updateBankerBalance($bankerBalance, 10);
+            return winb;
           }
           break;
         case sum == 21:
           if(currole == '庄家'){
             clearInterval(Interfaces.timer);
+            //庄家等于21时候看这时候玩家两张牌是不是21,是的话平手
+            if(Interfaces.roleInfo.player.cardAmount == 2 &&Interfaces.roleInfo.player.cardPoint == 21){
+              Util.updateBalance($balance, 10);
+              return windraw;
+            }
+
             //玩家输
-            Interfaces.promotMes($mask, $promot, false, winb);
+              Util.updateBankerBalance($bankerBalance, 10);
+              return winb;
           }else{
-            //玩家第一次就是21要判断此时庄家是否也是21
-            var len = $playerul.querySelectorAll('li').length;
-            if(len == 2 && this.getCount($bankerul) == 21){
-              //平手
-              Interfaces.promotMes($mask, $promot, false, windraw);
-              Util.updateBalance($balance, 10);
-            }else if(len ==2){
-              //玩家胜,玩家是黑杰克中彩了获得双倍赌注
-              Interfaces.promotMes($mask, $promot, false, winp);
-              Util.updateBalance($balance, 20);
+            //玩家第一次就是21要判断此时庄家是否也是21，先不做任何事等playerli节点插完再说
+            if(Interfaces.roleInfo.player.cardAmount == 2){
+              return ;
             }else{
-              //普通获胜
-              Interfaces.promotMes($mask, $promot, false, winp);
-              Util.updateBalance($balance, 10);
+              //玩家不是在第一次发牌时就是21的情况
+              num = Util.updateBankerBalance($bankerBalance, -10);
+              Util.updateBalance($balance, num + 10);
+              return winp;
             }
           }
           break;
         case sum < 21:
+          //系统第一次分发四张牌玩家点数为21时，看庄家牌数为2且值要小于21，此时玩家才是黑杰克可获得三倍赌注
+          if(currole == '庄家' && Interfaces.roleInfo.banker.cardAmount ==2 && $bankerul.lastElementChild.className != 'unknow'){
+            if(Interfaces.roleInfo.player.cardAmount == 2 &&Interfaces.roleInfo.player.cardPoint == 21){
+              num = Util.updateBankerBalance($bankerBalance, -20);
+              //判断够不够减少的量
+              Util.updateBalance($balance, num + 10);
+              return '玩家是黑杰克！<br>' + winp;
+            }
+          }
+
+          //其他情况
           if(currole == '庄家' && sum >= 19){
               clearInterval(Interfaces.timer);
               //都未越界比较玩家和庄家点数
               var bsum, psum;
-              bsum = Interfaces.cardPoint.banker;
-              psum = Interfaces.cardPoint.player;
+              bsum = Interfaces.roleInfo.banker.cardPoint;
+              psum = Interfaces.roleInfo.player.cardPoint;
               if(bsum > psum){
-                Interfaces.promotMes($mask, $promot, false, winb);
+                Util.updateBankerBalance($bankerBalance, 10);
+                return winb;
               }else if(bsum < psum){
-                Interfaces.promotMes($mask, $promot, false, winp);
-                Util.updateBalance($balance, 10);
+                num = Util.updateBankerBalance($bankerBalance, -10);
+                Util.updateBalance($balance, num + 10);
+
+                return winp;
               }else{
-                Interfaces.promotMes($mask, $promot, false, windraw);
                 Util.updateBalance($balance, 10);
+                return windraw;
               }
           }
+
           break;
       }
 
@@ -146,19 +163,47 @@ var  Util = {
         }
      });
 
-     Interfaces.cardPoint.banker = 0;
-     Interfaces.cardPoint.player = 0;
+     Interfaces.roleInfo.banker.cardPoint = 0;
+     Interfaces.roleInfo.player.cardPoint = 0;
+     Interfaces.roleInfo.banker.cardAmount = 0;
+     Interfaces.roleInfo.player.cardAmount = 0;
     },
-    //牌总值与innerHTML同步更新
-    updatePoint : function ($count, str){
-
-       $count.innerHTML = Interfaces.cardPoint[str];
+    //参与者牌信息的更新 与牌总值 innerHTML同步更新
+    updateRoleInfo : function ($role, $count, str, flag){
+       Interfaces.roleInfo[str].cardPoint = Util.getCount($role);
+       //flag为false表示当前这次不计数
+       if(flag == false){
+          $count.innerHTML = Interfaces.roleInfo[str].cardPoint;
+          return ;
+       }
+       //新的一局的开始清空在clearItem中amount计数，所以就不进该判断条件了
+       if(Interfaces.roleInfo[str].cardPoint!=0){
+          Interfaces.roleInfo[str].cardAmount +=1;
+       }
+       $count.innerHTML = Interfaces.roleInfo[str].cardPoint;
 
     },
-    //余额值与innerHTML同步更新
+    //玩家余额值与innerHTML同步更新
     updateBalance : function ($balance, num){
-       Interfaces.balance += num;
-       $balance.innerHTML = Interfaces.balance;
+
+       Interfaces.roleInfo.player.balance += num;
+       $balance.innerHTML = Interfaces.roleInfo.player.balance;
+
+    },
+    //庄家余额值与innerHTML同步更新
+    updateBankerBalance : function ($bankerBalance, num){
+
+       var returnnum = Interfaces.roleInfo.banker.balance;
+       if(returnnum + num < 0){
+
+         Interfaces.roleInfo.banker.balance = 0;
+         $bankerBalance.innerHTML = Interfaces.roleInfo.banker.balance;
+         return returnnum;
+       }else{
+         Interfaces.roleInfo.banker.balance += num;
+         $bankerBalance.innerHTML = Interfaces.roleInfo.banker.balance;
+         return -num;
+       }
 
     }
 
