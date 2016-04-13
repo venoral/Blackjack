@@ -15,11 +15,11 @@
 ####项目分析
 逻辑模型图如下
 
-![逻辑模型](file:///C:/Users/venoral/Desktop/逻辑模型.png)
+![逻辑模型](https://github.com/venoral/Blackjack/blob/master/resultImg/%E9%80%BB%E8%BE%91%E6%A8%A1%E5%9E%8B.png?raw=true)
 
 原型图和素材：原型图为自行设计，扑克牌为网上素材。截图以iphone6plus为准。
 
-![index](file:///C:/Users/venoral/Desktop/index.jpg) ![card](file:///C:/Users/venoral/Desktop/card.png) 
+![index](https://github.com/venoral/Blackjack/blob/master/resultImg/index.jpg?raw=true) ![card](https://github.com/venoral/Blackjack/blob/master/resultImg/card.png?raw=true) 
 
 ####程序设计思路
 文件目录结构 
